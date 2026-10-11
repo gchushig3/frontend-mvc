@@ -19,10 +19,13 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
+
+      - name: Ejecutar pruebas
+        run: npm test
 
       - name: Compilar aplicación NestJS
         run: npm run build
 
       - name: Notificar a Render para desplegar
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl --fail --silent --show-error --request POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
