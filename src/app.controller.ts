@@ -6,7 +6,7 @@ export class AppController {
   @Get()
   @Render('index')
   async index() {
-    const client = await soap.createClientAsync('http://localhost:3000/wsdl?wsdl');
+    const client = await soap.createClientAsync('https://soa-productos-service.onrender.com/wsdl?wsdl');
     const [result] = await client.ObtenerProductosAsync({});
     const productos = (result.productos || []).map((linea: string) => {
       const [id, nombre, precio] = linea.split('|');
