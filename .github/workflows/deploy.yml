@@ -1,0 +1,28 @@
+name: CI/CD - Validar y Desplegar Frontend MVC
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Compilar aplicación NestJS
+        run: npm run build
+
+      - name: Notificar a Render para desplegar
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
